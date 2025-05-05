@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Number Checker</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 420px;
+    }
+
+    .container {
+      background: white;
+      padding: 2rem 3rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #007BFF;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+      transition: all .3s ease;
+      transform: scale(1.1);
+    }
+
+    .output {
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      color: #333;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Number Checker</h1>
+  <button onclick="findMultiplesOfFive()">Find Multiples of 5</button>
+  <button onclick="findPrimesInRange()">Find Primes in Range</button>
+  <div class="output" id="output"></div>
+</div>
+
+<script>
+  const outputDiv = document.getElementById('output');
+
+  const getValidInteger = (message, defaultValue = '') => {
+    let value;
+    do {
+      const input = prompt(message, defaultValue);
+      value = Number(input);
+    } while (!Number.isInteger(value));
+    return value;
+  };
+
+  const findMultiplesOfFive = () => {
+    const max = getValidInteger("Enter a number:");
+    const result = [];
+
+    for (let i = 0; i <= max; i++) {
+      if (i % 5 === 0) result.push(i);
+    }
+
+    outputDiv.innerHTML = result.length > 0
+      ? `<strong>Multiples of 5:</strong> ${result.join(', ')}`
+      : `<strong>Sorry, no numbers</strong>`;
+  };
+
+  const isPrime = (num) => {
+    if (num < 2) return false;
+    for (let i = 2; i <= Math.sqrt(num); i++) {
+      if (num % i === 0) return false;
+    }
+    return true;
+  };
+
+  const findPrimesInRange = () => {
+    const first = getValidInteger("Enter the first number:");
+    const second = getValidInteger("Enter the second number:");
+
+    const m = Math.min(first, second);
+    const n = Math.max(first, second);
+    const primes = [];
+
+    for (let i = m; i <= n; i++) {
+      if (isPrime(i)) primes.push(i);
+    }
+
+    outputDiv.innerHTML = primes.length > 0
+      ? `<strong>Primes from ${m} to ${n}:</strong> ${primes.join(', ')}`
+      : `<strong>No prime numbers found between ${m} and ${n}.</strong>`;
+  };
+</script>
+</body>
+</html>
